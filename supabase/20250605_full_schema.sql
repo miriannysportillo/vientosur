@@ -48,7 +48,7 @@ alter table usuarios enable row level security;
 drop policy if exists "Usuarios pueden crear su propio perfil" on usuarios;
 create policy "Usuarios pueden crear su propio perfil" on usuarios for insert with check (auth.uid() = id);
 drop policy if exists "Usuarios pueden ver su perfil" on usuarios;
-create policy "Usuarios pueden ver su perfil" on usuarios for select using (auth.uid() = id);
+create policy "Usuarios pueden ver todos los perfiles" on usuarios for select using (true);
 drop policy if exists "Usuarios pueden modificar su perfil" on usuarios;
 create policy "Usuarios pueden modificar su perfil" on usuarios for update using (auth.uid() = id);
 
