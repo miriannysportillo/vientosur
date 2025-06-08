@@ -4,7 +4,6 @@ import { useRecentConversations } from '../../hooks/useRecentConversations';
 import Modal from '../ui/Modal';
 import { UserSearch } from '../profile/UserSearch';
 import { Pencil } from 'lucide-react';
-import { ChatWindow } from './ChatWindow';
 
 interface ConversationsListProps {
   onSelectUser: (userId: string, userName: string, userAvatar: string) => void;
@@ -36,26 +35,6 @@ export const ConversationsList: React.FC<ConversationsListProps> = ({ onSelectUs
     onSelectUser(u.id, u.displayName, u.avatar);
   };
 
-  // Nuevo: buscar perfiles de usuario y abrir chat al seleccionar
-  const [showChatModal, setShowChatModal] = useState(false);
-  const [chatUser, setChatUser] = useState<any>(null);
-
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    // Si el buscador no está vacío, mostrar el modal de búsqueda de usuario
-    if (e.target.value.trim().length > 0) {
-      setShowModal(true);
-    }
-  };
-
-  const handleUserSearchAndChat = (selectedUser: any) => {
-    setShowModal(false);
-    if (selectedUser) {
-      setChatUser(selectedUser);
-      setShowChatModal(true);
-    }
-  };
-
   return (
     <div className="h-full flex flex-col bg-white dark:bg-gray-900">
       {/* Header con avatar, nombre y botón */}
@@ -75,30 +54,17 @@ export const ConversationsList: React.FC<ConversationsListProps> = ({ onSelectUs
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <div className="p-4">
           <h2 className="font-bold mb-2 text-lg">Buscar usuario para chatear</h2>
-          <UserSearch onSelectUser={handleUserSearchAndChat} />
+          <UserSearch onSelectUser={(user: any) => { handleUserSearchSelect(user); }} />
         </div>
       </Modal>
-      {/* Modal de chat directo al seleccionar usuario */}
-      {showChatModal && chatUser && (
-        <Modal open={showChatModal} onClose={() => setShowChatModal(false)}>
-          <div className="p-0">
-            {/* Aquí se debe renderizar el chat con el usuario seleccionado */}
-            <ChatWindow
-              otherUserId={chatUser.id}
-              otherUserName={chatUser.nombre_completo || chatUser.nombre_usuario}
-              otherUserAvatar={chatUser.avatar_url || '/default-avatar.png'}
-            />
-          </div>
-        </Modal>
-      )}
       {/* Barra de búsqueda */}
       <div className="p-2 border-b bg-gray-50 dark:bg-gray-800">
         <input
           type="text"
           className="w-full px-3 py-2 rounded bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-          placeholder="Buscar perfiles de usuario..."
+          placeholder="Buscar conversaciones..."
           value={search}
-          onChange={handleSearchInput}
+          onChange={e => setSearch(e.target.value)}
         />
       </div>
       {/* Lista de conversaciones */}

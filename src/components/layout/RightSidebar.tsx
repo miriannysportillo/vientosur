@@ -26,25 +26,6 @@ const RightSidebar: React.FC = () => {
 
 	return (
 		<div className="flex flex-col h-full p-4 gap-6 bg-white relative">
-			{/* Botón para abrir el modal de conversaciones */}
-			<button
-				className="mb-4 px-4 py-2 rounded bg-primary-600 text-white hover:bg-primary-700 transition text-sm"
-				onClick={() => setShowConversations(true)}
-			>
-				Mensajes
-			</button>
-			{/* Modal de conversaciones flotante */}
-			{showConversations && (
-				<div className="fixed inset-0 z-50 flex items-start justify-end pointer-events-none">
-					<div
-						className="absolute inset-0 bg-black bg-opacity-40 pointer-events-auto"
-						onClick={() => setShowConversations(false)}
-					/>
-					<aside className="relative mt-8 mr-8 w-[min(22rem,90vw)] max-w-full h-[80vh] bg-white shadow-2xl rounded-xl z-50 flex flex-col pointer-events-auto animate-fade-in" style={{ minWidth: '18rem' }}>
-						<ConversationsList onSelectUser={handleSelectUser} />
-					</aside>
-				</div>
-			)}
 			{/* Usuarios en línea */}
 			<div className="rounded-lg shadow-md p-4 bg-white">
 				<div className="font-semibold mb-2 text-gray-700 flex items-center gap-2">
@@ -94,6 +75,25 @@ const RightSidebar: React.FC = () => {
 					))}
 				</div>
 			</div>
+			{/* Botón para abrir el modal de conversaciones */}
+			<button
+				className="mt-2 px-4 py-2 rounded bg-primary-600 text-white hover:bg-primary-700 transition text-sm"
+				onClick={() => setShowConversations(true)}
+			>
+				Mensajes
+			</button>
+			{/* Modal de conversaciones flotante */}
+			{showConversations && (
+				<div className="fixed inset-0 z-50 flex items-start justify-end pointer-events-none">
+					<div
+						className="absolute inset-0 bg-black bg-opacity-40 pointer-events-auto"
+						onClick={() => setShowConversations(false)}
+					/>
+					<aside className="relative mt-8 mr-8 w-[min(22rem,90vw)] max-w-full h-[80vh] bg-white shadow-2xl rounded-xl z-50 flex flex-col pointer-events-auto animate-fade-in" style={{ minWidth: '18rem' }}>
+						<ConversationsList onSelectUser={handleSelectUser} />
+					</aside>
+				</div>
+			)}
 		</div>
 	);
 };
