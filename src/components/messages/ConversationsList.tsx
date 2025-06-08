@@ -4,7 +4,7 @@ import { useRecentConversations } from '../../hooks/useRecentConversations';
 import Modal from '../ui/Modal';
 import { UserSearch } from '../profile/UserSearch';
 import { Pencil } from 'lucide-react';
-import { ChatWindow } from '../chat/ChatWindow';
+import { ChatWindow } from './ChatWindow';
 
 interface ConversationsListProps {
   onSelectUser: (userId: string, userName: string, userAvatar: string) => void;
